@@ -9,38 +9,60 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(26, PIN, NEO_GRB + NEO_KHZ800);
 
 
 void setup() {
   strip.begin();
+  Serial.begin(9600);
+  strip.setBrightness(100);
   strip.show(); // Initialize all pixels to 'off'
 }
 
 void loop(){ // For testing
   uint16_t n = strip.numPixels();
-  Serial.print('pixels:'+n);
-  solenoid(40, 200);
+  Serial.print("pixels:");
+  Serial.print(n);
+  Serial.print("\n");
+  solenoid(40, 250);
 }
 
 void solenoid(uint8_t time, uint8_t blinkrate){ // When the solenoids are getting to be fired
+  Serial.print("CHASE RED ");
   for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setBrightness(255);
-    strip.setPixelColor(i, strip.Color(127,0,0));
+    //strip.setBrightness(255);
+    strip.setPixelColor(i, strip.Color(255,0,0));
     strip.show();
-    Serial.print("solenoid - light on #"+i);
+    Serial.print(i);
+    Serial.print(" ");
     delay(time);
   }
-  for(uint16_t i=0; i<3; i++){
-    strip.setBrightness(0);
+  Serial.print(" \n");
+  
+  for(uint16_t j=0; j<3; j++){ // Supposed to blink
+    for(int k=0; k < strip.numPixels(); ++k) {
+        strip.setPixelColor(k, 0); // Sets the Pixels OFF
+    }
     strip.show();
-    Serial.print("solenoid - blink -lights off");
+    Serial.print("solenoid blink ");
+    Serial.print(j);
+    Serial.print(" off\n");
     delay(blinkrate);
-    strip.setBrightness(255);
+    //strip.setBrightness(255);
+    for(int k=0; k < strip.numPixels(); ++k) {
+        strip.setPixelColor(k, strip.Color(0, 0, 255));
+    }
     strip.show();
-    Serial.print("solenoid - blink -lights on");
+    Serial.print("solenoid blink ");
+    Serial.print(j);
+    Serial.print(" on\n");
     delay(blinkrate);
   }
-  strip.setBrightness(0);
+  for(int k=0; k < strip.numPixels(); ++k) {
+      strip.setPixelColor(k, 0);
+  }
+  
   strip.show();
+  strip.show();
+  Serial.print("solenoid - all off\n");
 }

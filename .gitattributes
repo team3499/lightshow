@@ -1,0 +1,5 @@
+# Normalize CRLF to LF
+*.c           text
+*.h           text
+*.txt         text
+

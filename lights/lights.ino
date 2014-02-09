@@ -21,18 +21,25 @@ void setup() {
 
 void loop(){
   //solenoid(40, 250);
-  all(strip.Color(255,0,0));
+  all(strip, strip.Color(255,0,0));
+  strip.show();
+  allRGB(strip, 255,0,0);
+  strip.show();
   //all(strip.Color(0,255,0));
   //all(strip.Color(0,0,255));
   //all(strip.Color(127,127,127));
 }
 
-void all(uint32_t color){ // Makes all the all the Pixels RED
-  
+void all(Adafruit_NeoPixel strip, uint32_t color){ // Sets all the all the Pixels to the specified color
   for(int i=0; i < strip.numPixels(); i++) {
-      strip.setPixelColor(i, color);
+    strip.setPixelColor(i, color);
   }
-  strip.show();
+}
+
+void allRGB(Adafruit_NeoPixel strip, unsigned int r, unsigned int g, unsigned int b){ // Sets all the pixels in strip to rgb values specified.
+  for(int i=0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, strip.Color(r, g, b));
+  }
 }
 
 void solenoid(uint8_t time, uint8_t blinkrate){ // When the solenoids are getting to be fired

@@ -15,54 +15,60 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(26, PIN, NEO_GRB + NEO_KHZ800);
 void setup() {
   strip.begin();
   Serial.begin(9600);
-  strip.setBrightness(100);
+  strip.setBrightness(255);
   strip.show(); // Initialize all pixels to 'off'
 }
 
-void loop(){ // For testing
-  uint16_t n = strip.numPixels();
-  Serial.print("pixels:");
-  Serial.print(n);
-  Serial.print("\n");
-  solenoid(40, 250);
+void loop(){
+  //solenoid(40, 250);
+  all(strip.Color(255,0,0));
+  //all(strip.Color(0,255,0));
+  //all(strip.Color(0,0,255));
+  //all(strip.Color(127,127,127));
+}
+
+void all(uint32_t color){ // Makes all the all the Pixels RED
+  
+  for(int i=0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, color);
+  }
+  strip.show();
 }
 
 void solenoid(uint8_t time, uint8_t blinkrate){ // When the solenoids are getting to be fired
   Serial.print("CHASE RED ");
-  for(uint16_t i=0; i<strip.numPixels(); i++) {
-    //strip.setBrightness(255);
+  for(int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, strip.Color(255,0,0));
     strip.show();
     Serial.print(i);
     Serial.print(" ");
     delay(time);
   }
+  
   Serial.print(" \n");
   
   for(uint16_t j=0; j<3; j++){ // Supposed to blink
-    for(int k=0; k < strip.numPixels(); ++k) {
+    for(int k=0; k < strip.numPixels(); k++) {
         strip.setPixelColor(k, 0); // Sets the Pixels OFF
     }
+    
     strip.show();
     Serial.print("solenoid blink ");
     Serial.print(j);
     Serial.print(" off\n");
     delay(blinkrate);
-    //strip.setBrightness(255);
+    
     for(int k=0; k < strip.numPixels(); ++k) {
         strip.setPixelColor(k, strip.Color(0, 0, 255));
     }
+    
     strip.show();
     Serial.print("solenoid blink ");
     Serial.print(j);
     Serial.print(" on\n");
     delay(blinkrate);
   }
-  for(int k=0; k < strip.numPixels(); ++k) {
-      strip.setPixelColor(k, 0);
-  }
   
-  strip.show();
   strip.show();
   Serial.print("solenoid - all off\n");
 }

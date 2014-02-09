@@ -21,24 +21,20 @@ void setup() {
 
 void loop(){
   //solenoid(40, 250);
-  all(strip, strip.Color(255,0,0));
+  //all(&strip, strip.Color(0,255,0));
+  allRGB(&strip, 0,0,255);
   strip.show();
-  allRGB(strip, 255,0,0);
-  strip.show();
-  //all(strip.Color(0,255,0));
-  //all(strip.Color(0,0,255));
-  //all(strip.Color(127,127,127));
 }
 
-void all(Adafruit_NeoPixel strip, uint32_t color){ // Sets all the all the Pixels to the specified color
-  for(int i=0; i < strip.numPixels(); i++) {
-    strip.setPixelColor(i, color);
+void all(Adafruit_NeoPixel *strip, uint32_t color){ // Sets all the all the Pixels to the specified color
+  for(int i=0; i < strip->numPixels(); i++) {
+    strip->setPixelColor(i, color);
   }
 }
 
-void allRGB(Adafruit_NeoPixel strip, unsigned int r, unsigned int g, unsigned int b){ // Sets all the pixels in strip to rgb values specified.
-  for(int i=0; i < strip.numPixels(); i++) {
-    strip.setPixelColor(i, strip.Color(r, g, b));
+void allRGB(Adafruit_NeoPixel *strip, unsigned int r, unsigned int g, unsigned int b){ // Sets all the pixels in strip to rgb values specified.
+  for(int i=0; i < strip->numPixels(); i++) {
+    strip->setPixelColor(i, strip->Color(r, g, b));
   }
 }
 
@@ -51,31 +47,32 @@ void solenoid(uint8_t time, uint8_t blinkrate){ // When the solenoids are gettin
     Serial.print(" ");
     delay(time);
   }
-  
+
   Serial.print(" \n");
-  
+
   for(uint16_t j=0; j<3; j++){ // Supposed to blink
     for(int k=0; k < strip.numPixels(); k++) {
-        strip.setPixelColor(k, 0); // Sets the Pixels OFF
+      strip.setPixelColor(k, 0); // Sets the Pixels OFF
     }
-    
+
     strip.show();
     Serial.print("solenoid blink ");
     Serial.print(j);
     Serial.print(" off\n");
     delay(blinkrate);
-    
-    for(int k=0; k < strip.numPixels(); ++k) {
-        strip.setPixelColor(k, strip.Color(0, 0, 255));
+
+    for(int k=0; k < strip.numPixels(); k++) {
+      strip.setPixelColor(k, strip.Color(0, 0, 255));
     }
-    
+
     strip.show();
     Serial.print("solenoid blink ");
     Serial.print(j);
     Serial.print(" on\n");
     delay(blinkrate);
   }
-  
+
   strip.show();
   Serial.print("solenoid - all off\n");
 }
+

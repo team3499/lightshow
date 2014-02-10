@@ -1,4 +1,5 @@
 #include <Adafruit_NeoPixel.h>
+#include "lib.h"
 
 #define PIN 6
 
@@ -9,7 +10,7 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(26, PIN, NEO_GRB + NEO_KHZ800);
+Strip strip = Strip(26, PIN, NEO_GRB | NEO_KHZ800);
 
 
 void setup() {
@@ -30,45 +31,8 @@ void loop(){
   strip.show();
 }
 
-void all(Adafruit_NeoPixel *strip, uint32_t color){ // Sets all the all the Pixels to the specified color
-  for(int i=0; i < strip->numPixels(); i++) {
-    strip->setPixelColor(i, color);
-  }
-}
 
-void allRGB(Adafruit_NeoPixel *strip, unsigned int r, unsigned int g, unsigned int b){ // Sets all the pixels in strip to rgb values specified.
-  for(int i=0; i < strip->numPixels(); i++) {
-    strip->setPixelColor(i, strip->Color(r, g, b));
-  }
-}
-
-void fade(Adafruit_NeoPixel *strip){ // Set a color before running (WIP)
-  for(unsigned char c=0; c < 256; c++) {
-    strip->setBrightness(c);
-    strip->show();
-    delay(50);
-  }
-}
-
-void strobe(Adafruit_NeoPixel *strip, uint32_t color){ // Strobing effect (WIP)
-  for(int k=0; k < strip->numPixels(); k++) {
-    strip->setPixelColor(k, color);
-  }
-  
-  strip->show();
-  
-  delay(1000);
-  
-  for(int k=0; k < strip->numPixels(); k++) {
-    strip->setPixelColor(k, 0); // Sets the Pixels OFF
-  }
-  
-  delay(1000);
-
-  strip->show();
-}
-
-void solenoid(Adafruit_NeoPixel *strip, uint8_t time, uint8_t blinkrate){ // When the solenoids are getting to be fired
+void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){ // When the solenoids are getting to be fired
   Serial.print("CHASE RED ");
   for(int i=0; i<strip->numPixels(); i++) {
     strip->setPixelColor(i, strip->Color(255,0,0));

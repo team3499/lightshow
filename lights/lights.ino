@@ -21,13 +21,13 @@ void setup() {
 }
 
 void loop(){
-  //solenoid(&strip, 40, 250);
+  solenoid(&strip, 40, 250);
   //all(&strip, strip.Color(0,255,0));
   //allRGB(&strip, 0,0,255);
   //strip.show();
   //delay(2000);
   //fade(&strip);
-  strobe(&strip, strip.Color(127,127,127));
+  //strobe(&strip, strip.Color(127,127,127));
   strip.show();
 }
 
@@ -41,6 +41,8 @@ void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){ // When the soleno
     Serial.print(" ");
     delay(time);
   }
+  
+  
 
   Serial.print(" \n");
 
@@ -56,7 +58,7 @@ void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){ // When the soleno
     delay(blinkrate);
 
     for(int k=0; k < strip->numPixels(); k++) {
-      strip->setPixelColor(k, strip->Color(0, 0, 255));
+      strip->setPixelColor(k, strip->Color(255, 0, 0));
     }
 
     strip->show();

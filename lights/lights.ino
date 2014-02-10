@@ -42,8 +42,6 @@ void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){ // When the soleno
     delay(time);
   }
   
-  
-
   Serial.print(" \n");
 
   for(uint16_t j=0; j<3; j++){ // Supposed to blink
@@ -72,7 +70,7 @@ void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){ // When the soleno
   Serial.print("solenoid - all off\n");
 }
 
-void blinky(Adafruit_NeoPixel *strip, int r, int g, int b, int r1, int g1, int b1, int wait){
+void blinky(Strip *strip, int r, int g, int b, int r1, int g1, int b1, int wait){
   for(int i=0; i < strip->numPixels(); i++) {
     strip->setPixelColor(i, strip->Color(r, g, b));
   }
@@ -85,10 +83,10 @@ void blinky(Adafruit_NeoPixel *strip, int r, int g, int b, int r1, int g1, int b
   delay(wait);
 }
 
-void run(Adafruit_NeoPixel *strip){
+void run(Strip *strip){
   for(int b=0; b < strip->numPixels(); b++) {
-  strip->setPixelColor(b, strip->Color(255, 0, 255));
-  strip->show();
+    strip->setPixelColor(b, strip->Color(255, 0, 255));
+    strip->show();
   //Serial.print(b);
   //for(int e=25; e < strip->numPixels(); e--){
     //strip->setPixelColor(e, strip->Color(255, 0, 255));
@@ -96,18 +94,12 @@ void run(Adafruit_NeoPixel *strip){
   }
   delay(1000);
   for(int b=0; b < strip->numPixels(); b++)
-  strip->setPixelColor(b, strip->Color(0,0,0));
+    strip->setPixelColor(b, strip->Color(0,0,0));
   strip->show();
   //Serial.print(b);
   //for(int e=25; e < strip->numPixels(); e--)
   //strip->setPixelColor(e, strip->Color(0,0,0));
   //strip->show();
   delay(1000);
-
-  
-
-
-
-
 }
 

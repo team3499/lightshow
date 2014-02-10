@@ -49,7 +49,7 @@ void strobe(Strip *strip, unsigned int wait, int count = 0){
 // Fade from off to RGB with RGB values, and time
 // fadeInRGB(strip, 1000, 255, 255, 255); // One second fade in time
 void fadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b){
-  for(int i = 0; i < 256; ++i){
+  for(int i = 0; i < 255; ++i){
     setPixelsRGB(strip, r, g, b);
     strip->setBrightness(i);
     strip->show();
@@ -60,7 +60,7 @@ void fadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, 
 // Fade from off to color, with time
 // fadeInColor(strip, 1000, strip->Color(255, 255, 255));
 void fadeInColor(Strip *strip, unsigned int time, uint32_t color){
-  for(int i = 0; i < 256; ++i){
+  for(int i = 0; i < 255; ++i){
     setPixelsColor(strip, color);
     strip->setBrightness(i);
     strip->show();
@@ -72,7 +72,7 @@ void fadeInColor(Strip *strip, unsigned int time, uint32_t color){
 // Fade from RGB to off, with time
 // fadeOutRGB(strip, 1000, 255, 255, 255);
 void fadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b){
-  for(int i = 0; i < 256; ++i){
+  for(int i = 255; i > 0; --i){
     setPixelsRGB(strip, r, g, b);
     strip->setBrightness(i);
     strip->show();
@@ -83,7 +83,7 @@ void fadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g,
 // Fade from color to off, with time
 // fadeOutColor(strip, 1000, strip->Color(255, 255, 255));
 void fadeOutColor(Strip *strip, unsigned int time, uint32_t color){
-  for(int i = 0; i < 256; ++i){
+  for(int i = 255; i > 0; --i){
     setPixelsColor(strip, color);
     strip->setBrightness(i);
     strip->show();

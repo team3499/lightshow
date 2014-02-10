@@ -108,3 +108,42 @@ void solenoid(Adafruit_NeoPixel *strip, uint8_t time, uint8_t blinkrate){ // Whe
   Serial.print("solenoid - all off\n");
 }
 
+void blinky(Adafruit_NeoPixel *strip, int r, int g, int b, int r1, int g1, int b1, int wait){
+  for(int i=0; i < strip->numPixels(); i++) {
+    strip->setPixelColor(i, strip->Color(r, g, b));
+  }
+  strip->show();
+  delay(wait);
+  for(int i=0; i < strip->numPixels(); i++) {
+    strip->setPixelColor(i, strip->Color(r1, g1, b1));
+  }
+  strip->show();
+  delay(wait);
+}
+
+void run(Adafruit_NeoPixel *strip){
+  for(int b=0; b < strip->numPixels(); b++) {
+  strip->setPixelColor(b, strip->Color(255, 0, 255));
+  strip->show();
+  //Serial.print(b);
+  //for(int e=25; e < strip->numPixels(); e--){
+    //strip->setPixelColor(e, strip->Color(255, 0, 255));
+    //strip->show();
+  }
+  delay(1000);
+  for(int b=0; b < strip->numPixels(); b++)
+  strip->setPixelColor(b, strip->Color(0,0,0));
+  strip->show();
+  //Serial.print(b);
+  //for(int e=25; e < strip->numPixels(); e--)
+  //strip->setPixelColor(e, strip->Color(0,0,0));
+  //strip->show();
+  delay(1000);
+
+  
+
+
+
+
+}
+

@@ -22,5 +22,52 @@ void setup() {
 }
 
 void loop(){
-  ;
+  //TeleopContinuous(&strip);
+  //Disabled(&strip);
+  //Autonomous(&strip);
+  //Shoot(&strip);
+  //Ready(&strip);
+  Ball(&strip);
 }
+
+void TeleopContinuous(Strip *strip){
+  fadeInColor(strip, 500, strip->Color(0, 255, 0));
+  fadeOutColor(strip, 500, strip->Color(0, 255, 0));  
+}
+
+void Disabled(Strip *strip){
+  fadeInColor(strip, 500, strip->Color(0, 180, 247));
+  fadeOutColor(strip, 500, strip->Color(0, 180, 247));
+}  
+
+void Autonomous(Strip *strip){
+  fadeInColor(strip, 500, strip->Color(255, 204, 0));
+  fadeOutColor(strip, 500, strip->Color(255, 204, 0));
+}  
+
+void Shoot(Strip *strip){
+  setPixelsColor(strip, strip->Color(255, 0, 0));
+  strip->show();
+  delay(500);
+  setPixelsColor(strip, strip->Color(0, 0, 0));
+  strip->show();
+  delay(500);
+}  
+
+void Ready(Strip *strip){
+  setPixelsColor(strip, strip->Color(255, 0, 0));
+  strip->show();
+  delay(500);
+  setPixelsColor(strip, strip->Color(0, 250, 0));
+  strip->show();
+  delay(500);
+}  
+
+void Ball(Strip *strip){
+  setPixelsColor(strip, strip->Color(75, 0, 130));
+  strip->show();
+  delay(500);
+  setPixelsColor(strip, strip->Color(0, 0, 0));
+  strip->show();
+  delay(500);
+}  

@@ -131,20 +131,20 @@ void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){
 }
 
 // Does the first half of bounce.
-void middleblink(){
+void middleblink(Strip *strip){
   int b=0;
-  int e=strip.numPixels()-1;
-  setPixelsRGB(&strip, 0, 0, 0);
-  for(int pixelstrip=0; pixelstrip <= strip.numPixels()/2; pixelstrip++){
-    strip.setPixelColor(b, 255, 0, 255);
-    strip.setPixelColor(e, 255, 0, 255);
-    strip.setPixelColor(b-1, 0, 0, 0);
-    strip.setPixelColor(e+1, 0, 0, 0);
+  int e=strip->numPixels()-1;
+  setPixelsRGB(strip, 0, 0, 0);
+  for(int pixelstrip=0; pixelstrip <= strip->numPixels()/2; pixelstrip++){
+    strip->setPixelColor(b, 255, 0, 255);
+    strip->setPixelColor(e, 255, 0, 255);
+    strip->setPixelColor(b-1, 0, 0, 0);
+    strip->setPixelColor(e+1, 0, 0, 0);
     b++;
     e--;
     Serial.print(b);
     Serial.print(e);
-    strip.show();
+    strip->show();
     delay(500);
   }
 }

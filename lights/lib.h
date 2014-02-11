@@ -90,3 +90,71 @@ void fadeOutColor(Strip *strip, unsigned int time, uint32_t color, unsigned char
     delay(time/(mx-mn));
   }
 }
+
+// When the solenoids are getting to be fired
+void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){
+  Serial.print("CHASE RED ");
+  for(int i=0; i<strip->numPixels(); i++) {
+    strip->setPixelColor(i, strip->Color(255,0,0));
+    strip->show();
+    Serial.print(i);
+    Serial.print(" ");
+    delay(time);
+  }
+  
+  Serial.print(" \n");
+
+  for(uint16_t j=0; j<3; j++){ // Supposed to blink
+    for(int k=0; k < strip->numPixels(); k++) {
+      strip->setPixelColor(k, 0); // Sets the Pixels OFF
+    }
+
+    strip->show();
+    Serial.print("solenoid blink ");
+    Serial.print(j);
+    Serial.print(" off\n");
+    delay(blinkrate);
+
+    for(int k=0; k < strip->numPixels(); k++) {
+      strip->setPixelColor(k, strip->Color(255, 0, 0));
+    }
+
+    strip->show();
+    Serial.print("solenoid blink ");
+    Serial.print(j);
+    Serial.print(" on\n");
+    delay(blinkrate);
+  }
+
+  strip->show();
+  Serial.print("solenoid - all off\n");
+}
+
+// Does the first half of bounce.
+void middleblink(){
+  int b=0;
+  int e=strip.numPixels()-1;
+  setPixelsRGB(&strip, 0, 0, 0);
+  for(int pixelstrip=0; pixelstrip <= strip.numPixels()/2; pixelstrip++){
+    strip.setPixelColor(b, 255, 0, 255);
+    strip.setPixelColor(e, 255, 0, 255);
+    strip.setPixelColor(b-1, 0, 0, 0);
+    strip.setPixelColor(e+1, 0, 0, 0);
+    b++;
+    e--;
+    Serial.print(b);
+    Serial.print(e);
+    strip.show();
+    delay(500);
+  }
+}
+
+// Blink the strip one color, then a second.
+void blink(Strip *strip, int r1, int g1, int b1, int r2, int g2, int b2, int wait){
+  setPixelsColor(strip, strip->Color(r1, g1, b1));
+  strip->show();
+  delay(wait);
+  setPixelsColor(strip, strip->Color(r2, g2, b2));
+  strip->show();
+  delay(wait);
+}

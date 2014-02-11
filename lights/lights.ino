@@ -1,5 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 #include "lib.h"
+#include "instruction.h"
 
 #define PIN 6
 
@@ -21,14 +22,13 @@ void setup() {
 }
 
 void loop(){
-  //solenoid(&strip, 40, 250);
+  solenoid(&strip, 40, 250);
   //all(&strip, strip.Color(0,255,0));
   //allRGB(&strip, 0,0,255);
   //strip.show();
   //delay(2000);
   //fade(&strip);
   //strobe(&strip, strip.Color(127,127,127));
-  middleblink();
   strip.show();
 }
 
@@ -84,24 +84,23 @@ void blinky(Strip *strip, int r, int g, int b, int r1, int g1, int b1, int wait)
   delay(wait);
 }
 
-
-void middleblink(){
-  int b=0;
-  int e=strip.numPixels();
-  for(int pixelstrip=0; pixelstrip < strip.numPixels()/2; pixelstrip++){
-    strip.setPixelColor(b, 255, 0, 255);
-    strip.setPixelColor(e, 255, 0, 255);
-    strip.setPixelColor(b-1, 0, 0, 0);
-    strip.setPixelColor(e+1, 0, 0, 0);
-    b++;
-    e--;
-    Serial.print(b);
-    Serial.print(e);
-    strip.show();
-    delay(500);
+void run(Strip *strip){
+  for(int b=0; b < strip->numPixels(); b++) {
+    strip->setPixelColor(b, strip->Color(255, 0, 255));
+    strip->show();
+  //Serial.print(b);
+  //for(int e=25; e < strip->numPixels(); e--){
+    //strip->setPixelColor(e, strip->Color(255, 0, 255));
+    //strip->show();
   }
-  
-
+  delay(1000);
+  for(int b=0; b < strip->numPixels(); b++)
+    strip->setPixelColor(b, strip->Color(0,0,0));
+  strip->show();
+  //Serial.print(b);
+  //for(int e=25; e < strip->numPixels(); e--)
+  //strip->setPixelColor(e, strip->Color(0,0,0));
+  //strip->show();
+  delay(1000);
 }
-
 

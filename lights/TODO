@@ -1,0 +1,22 @@
+List of things to do:
+
+Things to show:
+
+  Modes:
+ -- Teleop:
+     -- fade in/out green
+ -- Disabled:
+     -- fade in/out blue
+ -- Autonomous:
+     -- fade in/out Yellow
+
+
+  Ready to shoot
+ -- Preparing to shoot
+   -- Red (Blinking)
+   
+  'Catching'
+ -- Prepared to catch (based on user input)
+   -- red ((Blinking)(and green) Talk to Ethan)
+ -- Ball is there (based on sensor)
+   -- Purple (Blinking)

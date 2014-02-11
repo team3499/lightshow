@@ -48,45 +48,45 @@ void strobe(Strip *strip, unsigned int wait, int count = 0){
 
 // Fade from off to RGB with RGB values, and time
 // fadeInRGB(strip, 1000, 255, 255, 255); // One second fade in time
-void fadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b){
-  for(int i = 0; i < 255; ++i){
+void fadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b, unsigned char mx = 255, unsigned char mn = 0){
+  for(int i = mn; i < mx; ++i){
     setPixelsRGB(strip, r, g, b);
     strip->setBrightness(i);
     strip->show();
-    delay(time/256);
+    delay(time/(mx-mn));
   }
 }
 
 // Fade from off to color, with time
 // fadeInColor(strip, 1000, strip->Color(255, 255, 255));
-void fadeInColor(Strip *strip, unsigned int time, uint32_t color){
-  for(int i = 0; i < 255; ++i){
+void fadeInColor(Strip *strip, unsigned int time, uint32_t color, unsigned char mx = 255, unsigned char mn = 0){
+  for(int i = mn; i < mx; ++i){
     setPixelsColor(strip, color);
     strip->setBrightness(i);
     strip->show();
-    delay(time/256);
+    delay(time/(mx-mn));
   }
 }
 
 
 // Fade from RGB to off, with time
 // fadeOutRGB(strip, 1000, 255, 255, 255);
-void fadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b){
-  for(int i = 255; i > 0; --i){
+void fadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b, unsigned char mx = 255, unsigned char mn = 0){
+  for(int i = mx; i > mn; --i){
     setPixelsRGB(strip, r, g, b);
     strip->setBrightness(i);
     strip->show();
-    delay(time/256);
+    delay(time/(mx-mn));
   }
 }
 
 // Fade from color to off, with time
 // fadeOutColor(strip, 1000, strip->Color(255, 255, 255));
-void fadeOutColor(Strip *strip, unsigned int time, uint32_t color){
-  for(int i = 255; i > 0; --i){
+void fadeOutColor(Strip *strip, unsigned int time, uint32_t color, unsigned char mx = 255, unsigned char mn = 0){
+  for(int i = mx; i > mn; --i){
     setPixelsColor(strip, color);
     strip->setBrightness(i);
     strip->show();
-    delay(time/256);
+    delay(time/(mx-mn));
   }
 }

@@ -18,6 +18,11 @@ void setup() {
   Serial.begin(9600);
   strip.setBrightness(255);
   strip.show(); // Initialize all pixels to 'off'
+  while(1){
+    strip.setPixelColor(0, strip.Color(255, 0, 0)); 
+    strip.setPixelColor(1, strip.Color(0, 255, 0));
+    strip.show();
+  }
 }
 
 void loop(){
@@ -88,6 +93,7 @@ void blinky(Strip *strip, int r, int g, int b, int r1, int g1, int b1, int wait)
 void middleblink(){
   int b=0;
   int e=strip.numPixels();
+  setPixelsRGB(&strip, 0, 0, 0);
   for(int pixelstrip=0; pixelstrip < strip.numPixels()/2; pixelstrip++){
     strip.setPixelColor(b, 255, 0, 255);
     strip.setPixelColor(e, 255, 0, 255);
@@ -100,7 +106,9 @@ void middleblink(){
     strip.show();
     delay(500);
   }
-  
+  if(strip.numPixels()%2){
+      
+  }
 
 }
 

@@ -18,5 +18,5 @@ Things to show:
   'Catching'
  -- Prepared to catch (based on user input)
    -- red ((Blinking)(and green) Talk to Ethan)
- -- Ball is there (based on sensor)
+ -- Ball is there / We have the ball!
    -- Purple (Blinking)

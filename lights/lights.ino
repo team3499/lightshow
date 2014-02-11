@@ -25,9 +25,11 @@ void setup() {
 
 void loop(){
   
+  
   // Check for mode switch
   
-  // Switch based on mode
+  // Switch based on mode 
+  /*
   switch (i->step()) {
     case 0:
       DisabledContinuous();
@@ -40,5 +42,58 @@ void loop(){
       break;
     default:
       break;
-  }
+  }*/
+  
+  //TeleopContinuous(&strip);
+  //Disabled(&strip);
+  //Autonomous(&strip);
+  //Shoot(&strip);
+  //WillCatch(&strip);
+  //Ball(&strip);
+}
+
+void TeleopContinuous(Strip *strip){
+  hfadeInColor(strip, 250, strip->Color(0, 255, 0), false);
+  hfadeOutColor(strip, 250, strip->Color(0, 255, 0), false);
+  hfadeInColor(strip, 250, strip->Color(0, 255, 0), true);
+  hfadeOutColor(strip, 250, strip->Color(0, 255, 0), true);
+}
+
+void Disabled(Strip *strip){
+  hfadeInColor(strip, 250, strip->Color(0, 180, 247), false);
+  hfadeOutColor(strip, 250, strip->Color(0, 180, 247), false);
+  hfadeInColor(strip, 250, strip->Color(0, 180, 247), true);
+  hfadeOutColor(strip, 250, strip->Color(0, 180, 247), true);
+}
+
+void Autonomous(Strip *strip){
+  hfadeInColor(strip, 250, strip->Color(255, 204, 0), false);
+  hfadeOutColor(strip, 250, strip->Color(255, 204, 0), false);
+  hfadeInColor(strip, 250, strip->Color(255, 204, 0), true);
+  hfadeOutColor(strip, 250, strip->Color(255, 204, 0), true);
+}
+
+void Shoot(Strip *strip){
+  setPixelsColor(strip, strip->Color(255, 0, 0));
+  strip->show();
+  delay(500);
+  setPixelsColor(strip, strip->Color(0, 0, 0));
+  strip->show();
+  delay(500);
+}
+
+void WillCatch(Strip *strip){
+  dfadeInColor(strip, 250, strip->Color(255, 0, 0), strip->Color(0, 255, 0));
+  dfadeOutColor(strip, 250, strip->Color(255, 0, 0), strip->Color(0, 255, 0));
+  dfadeInColor(strip, 250, strip->Color(0, 255, 0), strip->Color(255, 0, 0));
+  dfadeOutColor(strip, 250, strip->Color(0, 255, 0), strip->Color(255, 0, 0));
+}
+
+void Ball(Strip *strip){
+  setPixelsColor(strip, strip->Color(75, 0, 130));
+  strip->show();
+  delay(500);
+  setPixelsColor(strip, strip->Color(0, 0, 0));
+  strip->show();
+  delay(500);
 }

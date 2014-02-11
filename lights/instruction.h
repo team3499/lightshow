@@ -3,6 +3,7 @@
 
 
 class Instruction {
+public:
   Instruction(){
     // PIN 10
     pinMode(10, INPUT);

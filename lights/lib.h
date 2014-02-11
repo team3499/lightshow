@@ -159,9 +159,9 @@ void fadeOutColor(Strip *strip, unsigned int time, uint32_t color, unsigned char
 
 // Fade from off to RGB with RGB values, and time
 // fadeInRGB(strip, 1000, 255, 255, 255); // One second fade in time
-void hfadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b, unsigned char mx = 255, unsigned char mn = 0){
+void hfadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b, bool offset, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mn; i < mx; ++i){
-    hsetPixelsRGB(strip, r, g, b);
+    hsetPixelsRGB(strip, r, g, b, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -170,9 +170,9 @@ void hfadeInRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g,
 
 // Fade from off to color, with time
 // fadeInColor(strip, 1000, strip->Color(255, 255, 255));
-void hfadeInColor(Strip *strip, unsigned int time, uint32_t color, unsigned char mx = 255, unsigned char mn = 0){
+void hfadeInColor(Strip *strip, unsigned int time, uint32_t color, bool offset, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mn; i < mx; ++i){
-    hsetPixelsColor(strip, color);
+    hsetPixelsColor(strip, color, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -182,9 +182,9 @@ void hfadeInColor(Strip *strip, unsigned int time, uint32_t color, unsigned char
 
 // Fade from RGB to off, with time
 // fadeOutRGB(strip, 1000, 255, 255, 255);
-void hfadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b, unsigned char mx = 255, unsigned char mn = 0){
+void hfadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g, unsigned int b, bool offset, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mx; i > mn; --i){
-    hsetPixelsRGB(strip, r, g, b);
+    hsetPixelsRGB(strip, r, g, b, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -193,9 +193,9 @@ void hfadeOutRGB(Strip *strip, unsigned int time, unsigned int r, unsigned int g
 
 // Fade from color to off, with time
 // fadeOutColor(strip, 1000, strip->Color(255, 255, 255));
-void hfadeOutColor(Strip *strip, unsigned int time, uint32_t color, unsigned char mx = 255, unsigned char mn = 0){
+void hfadeOutColor(Strip *strip, unsigned int time, uint32_t color, bool offset, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mx; i > mn; --i){
-    hsetPixelsColor(strip, color);
+    hsetPixelsColor(strip, color, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -209,9 +209,9 @@ void hfadeOutColor(Strip *strip, unsigned int time, uint32_t color, unsigned cha
 
 // Fade from off to RGB with RGB values, and time
 // fadeInRGB(strip, 1000, 255, 255, 255); // One second fade in time
-void dfadeInRGB(Strip *strip, unsigned int time, unsigned int r1, unsigned int g1, unsigned int b1, unsigned int r2, unsigned int g2, unsigned int b2, unsigned char mx = 255, unsigned char mn = 0){
+void dfadeInRGB(Strip *strip, unsigned int time, unsigned int r1, unsigned int g1, unsigned int b1, unsigned int r2, unsigned int g2, unsigned int b2, bool offset = false, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mn; i < mx; ++i){
-    dsetPixelsRGB(strip, r1, g1, b1, r2, g2, b2);
+    dsetPixelsRGB(strip, r1, g1, b1, r2, g2, b2, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -220,9 +220,9 @@ void dfadeInRGB(Strip *strip, unsigned int time, unsigned int r1, unsigned int g
 
 // Fade from off to color, with time
 // fadeInColor(strip, 1000, strip->Color(255, 255, 255));
-void dfadeInColor(Strip *strip, unsigned int time, uint32_t color1, uint32_t color2, unsigned char mx = 255, unsigned char mn = 0){
+void dfadeInColor(Strip *strip, unsigned int time, uint32_t color1, uint32_t color2, bool offset = false, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mn; i < mx; ++i){
-    dsetPixelsColor(strip, color1, color2);
+    dsetPixelsColor(strip, color1, color2, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -232,9 +232,9 @@ void dfadeInColor(Strip *strip, unsigned int time, uint32_t color1, uint32_t col
 
 // Fade from RGB to off, with time
 // fadeOutRGB(strip, 1000, 255, 255, 255);
-void dfadeOutRGB(Strip *strip, unsigned int time, unsigned int r1, unsigned int g1, unsigned int b1, unsigned int r2, unsigned int g2, unsigned int b2, unsigned char mx = 255, unsigned char mn = 0){
+void dfadeOutRGB(Strip *strip, unsigned int time, unsigned int r1, unsigned int g1, unsigned int b1, unsigned int r2, unsigned int g2, unsigned int b2, bool offset = false, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mx; i > mn; --i){
-    dsetPixelsRGB(strip, r1, g1, b1, r2, g2, b2);
+    dsetPixelsRGB(strip, r1, g1, b1, r2, g2, b2, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -243,9 +243,9 @@ void dfadeOutRGB(Strip *strip, unsigned int time, unsigned int r1, unsigned int 
 
 // Fade from color to off, with time
 // fadeOutColor(strip, 1000, strip->Color(255, 255, 255));
-void dfadeOutColor(Strip *strip, unsigned int time, uint32_t color1, uint32_t color2, unsigned char mx = 255, unsigned char mn = 0){
+void dfadeOutColor(Strip *strip, unsigned int time, uint32_t color1, uint32_t color2, bool offset = false, unsigned char mx = 255, unsigned char mn = 0){
   for(int i = mx; i > mn; --i){
-    dsetPixelsColor(strip, color1, color2);
+    dsetPixelsColor(strip, color1, color2, offset);
     strip->setBrightness(i);
     strip->show();
     delay(time/(mx-mn));
@@ -296,20 +296,20 @@ void solenoid(Strip *strip, uint8_t time, uint8_t blinkrate){
 }
 
 // Does the first half of bounce.
-void middleblink(){
+void middleblink(Strip *strip){
   int b=0;
-  int e=strip.numPixels()-1;
-  setPixelsRGB(&strip, 0, 0, 0);
-  for(int pixelstrip=0; pixelstrip <= strip.numPixels()/2; pixelstrip++){
-    strip.setPixelColor(b, 255, 0, 255);
-    strip.setPixelColor(e, 255, 0, 255);
-    strip.setPixelColor(b-1, 0, 0, 0);
-    strip.setPixelColor(e+1, 0, 0, 0);
+  int e=strip->numPixels()-1;
+  setPixelsRGB(strip, 0, 0, 0);
+  for(int pixelstrip=0; pixelstrip <= strip->numPixels()/2; pixelstrip++){
+    strip->setPixelColor(b, 255, 0, 255);
+    strip->setPixelColor(e, 255, 0, 255);
+    strip->setPixelColor(b-1, 0, 0, 0);
+    strip->setPixelColor(e+1, 0, 0, 0);
     b++;
     e--;
     Serial.print(b);
     Serial.print(e);
-    strip.show();
+    strip->show();
     delay(500);
   }
 }

@@ -1,3 +1,6 @@
+#ifndef LIB_H
+#define LIB_H
+
 typedef Adafruit_NeoPixel Strip;
 
 // ---------------------- //
@@ -323,3 +326,5 @@ void blink(Strip *strip, int r1, int g1, int b1, int r2, int g2, int b2, int wai
   strip->show();
   delay(wait);
 }
+
+#endif // LIB_H

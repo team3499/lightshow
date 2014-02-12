@@ -1,6 +1,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "lib.h"
 #include "instruction.h"
+#include "prettylights.h"
 
 #define PIN 6
 
@@ -15,15 +16,17 @@ Strip strip = Strip(26, PIN, NEO_GRB | NEO_KHZ800);
 Instruction *i = new Instruction();
 
 
-void setup() {
+void setup(){
   strip.begin();
   Serial.begin(9600);
   strip.setBrightness(255);
-  strip.show(); // Initialize all pixels to 'off'
+//  strip.show(); // Initialize all pixels to 'off'
+  //Prettylight(&strip);
   
 }
 
 void loop(){
+  //Prettylight(&strip);
   
   
   // Check for mode switch
@@ -44,12 +47,15 @@ void loop(){
       break;
   }*/
   
+
   //TeleopContinuous(&strip);
   //Disabled(&strip);
   //Autonomous(&strip);
   //Shoot(&strip);
   //WillCatch(&strip);
   //Ball(&strip);
+  Prettylight(&strip);
+
 }
 
 void TeleopContinuous(Strip *strip){
@@ -67,10 +73,10 @@ void Disabled(Strip *strip){
 }
 
 void Autonomous(Strip *strip){
-  hfadeInColor(strip, 250, strip->Color(255, 204, 0), false);
-  hfadeOutColor(strip, 250, strip->Color(255, 204, 0), false);
-  hfadeInColor(strip, 250, strip->Color(255, 204, 0), true);
-  hfadeOutColor(strip, 250, strip->Color(255, 204, 0), true);
+  hfadeInColor(strip, 250, strip->Color(255, 233, 0), false);
+  hfadeOutColor(strip, 250, strip->Color(255, 233, 0), false);
+  hfadeInColor(strip, 250, strip->Color(255, 233, 0), true);
+  hfadeOutColor(strip, 250, strip->Color(255, 233, 0), true);
 }
 
 void Shoot(Strip *strip){
@@ -90,10 +96,12 @@ void WillCatch(Strip *strip){
 }
 
 void Ball(Strip *strip){
-  setPixelsColor(strip, strip->Color(75, 0, 130));
+  setPixelsColor(strip, strip->Color(60, 0, 110));
   strip->show();
   delay(500);
   setPixelsColor(strip, strip->Color(0, 0, 0));
   strip->show();
   delay(500);
 }
+
+

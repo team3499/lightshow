@@ -1,6 +1,6 @@
 #include "lib.h"
-/*
-void Prettylight(Strip *s){
+
+void prettyLightCircle(Strip *s){
   int r=0;
   int o=r-1;
   int y=o-1;
@@ -28,21 +28,22 @@ void Prettylight(Strip *s){
     Serial.print(r);
     Serial.print(o);
     s->show();
-    delay(100);
+    delay(80);
   }
-}*/
+  setPixelsRGB(s, 0, 0, 0);
+}
   
- void Prettylight(Strip *s){
+void prettyLightFull(Strip *s){
 //    uint32_t rainbow[6] = new uint32_t[6];
     
     
-    uint32_t rainbow[6] = {
-      rainbow[0]=s->Color(255, 0, 0),
-      rainbow[1]=s->Color(255, 102, 0),
-      rainbow[2]=s->Color(255, 233, 0),
-      rainbow[3]=s->Color(0, 255, 0),
-      rainbow[4]=s->Color(0, 0, 255), 
-      rainbow[5]=s->Color(159, 0, 197)
+  uint32_t rainbow[6] = {
+    rainbow[0]=s->Color(255, 0, 0),
+    rainbow[1]=s->Color(255, 102, 0),
+    rainbow[2]=s->Color(255, 233, 0),
+    rainbow[3]=s->Color(0, 255, 0),
+    rainbow[4]=s->Color(0, 0, 255), 
+    rainbow[5]=s->Color(159, 0, 197)
     };
     
     
@@ -51,18 +52,59 @@ void Prettylight(Strip *s){
     rainbow[2]=s->Color(255, 233, 0);
     rainbow[3]=s->Color(0, 255, 0);
     rainbow[4]=s->Color(0, 0, 255); 
-    rainbow[5]=s->Color(159, 0, 197);
-    */
+    rainbow[5]=s->Color(159, 0, 197);*/
+    
     
     //setPixelsRGB(s, 0, 0, 0);
-    for(int pos = 0; pos < s->numPixels(); pos++){
-      for(int i = 0; i < s->numPixels(); ++i){
-        s->setPixelColor(s->numPixels()-i, rainbow[((pos+i)%6)]);
-      }
+  for(int pos = 0; pos < s->numPixels(); pos++){
+    for(int i = 0; i < s->numPixels(); ++i){
+      s->setPixelColor(s->numPixels()-i, rainbow[((pos+i)%6)]);
+    }
 //      s->setPixelColor(r, 255, 0, 0);
 //      Serial.print(r);
-      s->show();
-      delay(100);
-    }
- }  
+    s->show();
+    delay(150);
+  }
+  setPixelsRGB(s, 0, 0, 0);
+} 
+ 
+void prettyLightFill(Strip *s){
+  int32_t rainbow[6] = {
+    rainbow[0]=s->Color(255, 0, 0),
+    rainbow[1]=s->Color(255, 102, 0),
+    rainbow[2]=s->Color(255, 233, 0),
+    rainbow[3]=s->Color(0, 255, 0),
+    rainbow[4]=s->Color(0, 0, 255), 
+    rainbow[5]=s->Color(159, 0, 197)
+  };
+     
+  for(int pos = 0; pos < s->numPixels(); pos++){
+    for(int i = 0; i < s->numPixels(); ++i){
+      s->setPixelColor(s->numPixels()-pos, rainbow[((pos+i)%6)]);
+     }
+    s->show();
+    delay(60);
+  }  
+  setPixelsRGB(s, 0, 0, 0);
+}    
+
+   
+void prettyLightStrobe(Strip *s){
+  unsigned int wait;
+  int count = 100;
+  int num = 1;
+  if(count)
+  num = count;
+  for(int i = 0; i <= num; i += (!!count)) {
+    strobeOnce(s, 255,  0,  0, wait);
+    strobeOnce(s, 255,  0,  0, wait); 
+    strobeOnce(s,  0, 255,   0, wait);
+    strobeOnce(s,  0, 255,   0, wait);
+    //strobeOnce(s,   0,   0, 255, wait)
+    //strobeOnce(s, 159, 0, 197, wait);
+   
+  }
+  setPixelsRGB(s, 0, 0, 0);
+    
+}   
  

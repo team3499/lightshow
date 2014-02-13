@@ -54,8 +54,10 @@ void loop(){
   //Shoot(&strip);
   //WillCatch(&strip);
   //Ball(&strip);
-  Prettylight(&strip);
-
+  prettyLightCircle(&strip);
+  prettyLightFull(&strip);
+  prettyLightFill(&strip);
+  //prettyLightStrobe(&strip);
 }
 
 void TeleopContinuous(Strip *strip){

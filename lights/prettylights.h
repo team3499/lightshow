@@ -57,7 +57,7 @@ void prettyLightFull(Strip *s){
     
     //setPixelsRGB(s, 0, 0, 0);
   for(int pos = 0; pos < s->numPixels(); pos++){
-    for(int i = 0; i < s->numPixels(); ++i){
+    for(int i = 0; i <= s->numPixels(); ++i){
       s->setPixelColor(s->numPixels()-i, rainbow[((pos+i)%6)]);
     }
 //      s->setPixelColor(r, 255, 0, 0);

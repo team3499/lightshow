@@ -1,3 +1,6 @@
+#include <Adafruit_NeoPixel.h>
+#include "lightstrip.h"
+
 #define PWM_INPUT       2
 #define NEOPIXEL_OUTPUT 6
 
@@ -7,8 +10,22 @@
 // should represent a single, full cycle of animation.  See lightshows
 // below to define the PWM pulse width that triggers each show.
 
-void blackout() {
+LightStrip strip = LightStrip(26, NEOPIXEL_OUTPUT);
 
+// Alternates even/odd between color
+void alternating(uint32_t color1, uint32_t color2) {
+  strip.fadeOut();
+  strip.setColor(color1, 0xAAAAAAAA);
+  strip.setColor(color2, 0x55555555);
+  strip.fadeIn();
+  strip.fadeOut();
+  strip.setColor(color1, 0x55555555);
+  strip.setColor(color2, 0xAAAAAAAA);
+  strip.fadeIn();
+}
+
+void blackout() {
+  if (strip.getBrightness() > 0) { strip.fadeOut(); }
 }
 
 void autonomous() {
@@ -28,11 +45,22 @@ void rainbow() {
 }
 
 void cops() {
-
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000000000111111);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000111111000000);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000001111110000000000000);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000001111110000000000000000000);
+  strip.show();
+  delay(200);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000000000111111);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000111111000000);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000001111110000000000000);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000001111110000000000000000000);
+  strip.show();
+  delay(200);
 }
 
 void chaser() {
-   
+
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -130,10 +158,15 @@ void setup() {
   currentLightShow = 0;
 
   Serial.begin(9600);
+  
+  strip.begin();
+  strip.show();
 
   attachInterrupt(0, isr, CHANGE);
 }
 
 void loop() {
-  selectAndRunLightShow(pwmPulseWidth);
+  //selectAndRunLightShow(pwmPulseWidth);
+  //alternating(strip.Color(0xFF, 0xFF, 0x00), strip.Color(0x00, 0x00, 0x00));
+  cops();
 }

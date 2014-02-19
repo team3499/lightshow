@@ -29,16 +29,48 @@ void blackout() {
 }
 
 void autonomous() {
-
+  strip.fadeOut(1);
+  strip.setColor(strip.Color(255, 215, 0));
+  strip.fadeIn(1);
 }
 
+void teleop(){
+  strip.fadeOut(1);
+  strip.setColor(strip.Color(0, 255, 0));
+  strip.fadeIn(1);
+}  
 void catching() {
-
+  strip.setColor(strip.Color(  0, 255, 0));
+  delay(300);
+  strip.show();
+  strip.setColor(strip.Color(255, 0, 0));
+  delay(300);
+  strip.show();
 }
 
-void passing() {
+void disabled(){
+  strip.fadeOut(3);
+  strip.setColor(strip.Color( 0, 0, 255));
+  strip.fadeIn(3);
+}  
+
+void shoot() {
+  strip.setColor(strip.Color(255, 0, 0));
+  delay(400);
+  strip.show();
+  strip.setColor(strip.Color(  0,  0,  0));
+  delay(400);
+  strip.show();
 
 }
+void ball(){
+  strip.setColor(strip.Color(75, 0, 130));
+  delay(400);
+  strip.show();
+  strip.setColor(strip.Color( 0, 0, 0));
+  delay(400);
+  strip.show();
+}  
 
 void rainbow() {
 
@@ -81,7 +113,7 @@ pwm_lightshow_t lightshows[] = {
   {    0,  300, &blackout,   "blackout"},       // no lights
   {  200,  600, &autonomous, "autonomous"},     // tbd
   {  500,  900, &catching,   "catching" },      // green alternating
-  {  800, 1200, &passing,    "passing" },       // purple alternating
+  {  800, 1200, &disabled,    "disabled" },       // purple alternating
   { 1100, 1500, &rainbow,    "rainbow" },       // rainbow happy times
   { 1400, 1800, &cops,       "cops" },          // red and blue flashers
   { 1700, 2100, &blackout,   "blackout" },      // no lights
@@ -168,5 +200,10 @@ void setup() {
 void loop() {
   //selectAndRunLightShow(pwmPulseWidth);
   //alternating(strip.Color(0xFF, 0xFF, 0x00), strip.Color(0x00, 0x00, 0x00));
-  cops();
+  //disabled();
+  //teleop();
+  //autonomous();
+  //catching();
+  //shoot();
+  ball();
 }

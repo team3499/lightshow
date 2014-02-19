@@ -12,7 +12,7 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Strip strip = Strip(27, PIN, NEO_GRB | NEO_KHZ800);
+Strip strip = Strip(26, PIN, NEO_GRB | NEO_KHZ800);
 Instruction *i = new Instruction();
 
 
@@ -48,7 +48,7 @@ void loop(){
   }*/
   
 
-  TeleopContinuous(&strip);
+  //TeleopContinuous(&strip);
   //Disabled(&strip);
   //Autonomous(&strip);
   //Shoot(&strip);
@@ -57,6 +57,7 @@ void loop(){
   //prettyLightCircle(&strip);
   //prettyLightFull(&strip);
   //prettyLightFill(&strip);
+  prettyLight(&strip);
   
 }
 

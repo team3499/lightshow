@@ -107,4 +107,8 @@ void prettyLightStrobe(Strip *s){
   setPixelsRGB(s, 0, 0, 0);
     
 }   
- 
+void prettyLight(Strip *s){
+  prettyLightCircle(s);
+  prettyLightFill(s);
+  prettyLightFull(s);
+} 

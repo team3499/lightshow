@@ -11,7 +11,8 @@ private:
 public:
   LightStrip(int, int);
   
-  void setColor(uint32_t color, uint32_t mask = 0xFFFFFFFF);
+  void setColor(uint32_t color, uint32_t mask = 0xFFFFFFFF, bool clear = false);
+  void setColorAndShow(uint32_t color, uint32_t mask = 0xFFFFFFFF, bool clear = false);
   void fadeOut(uint32_t time = 0);
   void fadeIn(uint32_t time = 0);
   

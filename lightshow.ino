@@ -1,8 +1,19 @@
-#include <Adafruit_NeoPixel.h>
+include <Adafruit_NeoPixel.h>
 #include "lightstrip.h"
 
 #define PWM_INPUT       2
+#define TEST_OUTPUT     3
+#define ALLIANCE_INPUT  4
 #define NEOPIXEL_OUTPUT 6
+
+////////////////////////////////////////////////////////////////////////////
+
+typedef enum {
+  RED,
+  BLUE
+} alliance_t;
+
+alliance_t alliance;
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -57,19 +68,20 @@ void cylon(uint32_t color) {
 
 void blackout() {
   if (strip.getBrightness() > 0) { strip.fadeOut(); }
+  strip.setBrightness(0);
 }
 
 void autonomous() {
-  strip.fadeOut(1);
-  strip.setColor(strip.Color(255, 215, 0));
-  strip.fadeIn(1);
+  alternating(strip.Color(0xFF, 0xFF, 0x00), strip.Color(0x00, 0x00, 0x00));
 }
 
 void teleop(){
-  strip.fadeOut(1);
-  strip.setColor(strip.Color(0, 255, 0));
-  strip.fadeIn(1);
-}  
+  uint32_t alliance_color;
+  if (alliance == BLUE) { alliance_color = strip.Color(0x00, 0x00, 0xFF); }
+  else { alliance_color = strip.Color(0xFF, 0x00, 0x00); }
+  cylon(alliance_color);
+}
+
 void catching() {
   uint32_t color = strip.Color(0x00, 0xFF, 0x00);
   strip.setColorAndShow(color, 0b00000000000011000000000001100000, true); delay(50);
@@ -83,32 +95,8 @@ void catching() {
   strip.setColorAndShow(color, 0b00000000000000000000000000000000, true); delay(200);
 }
 
-void disabled(){
-  strip.fadeOut(3);
-  strip.setColor(strip.Color( 0, 0, 255));
-  strip.fadeIn(3);
-}  
-
-void shoot() {
-  strip.setColor(strip.Color(255, 0, 0));
-  delay(400);
-  strip.show();
-  strip.setColor(strip.Color(  0,  0,  0));
-  delay(400);
-  strip.show();
-
-}
-void ball(){
-  strip.setColor(strip.Color(75, 0, 130));
-  delay(400);
-  strip.show();
-  strip.setColor(strip.Color( 0, 0, 0));
-  delay(400);
-  strip.show();
-}  
-
-void rainbow() {
-
+void showoff() {
+  cops();
 }
 
 void cops() {
@@ -126,10 +114,6 @@ void cops() {
   delay(200);
 }
 
-void chaser() {
-
-}
-
 ////////////////////////////////////////////////////////////////////////////
 
 typedef void (*funcptr)(); // a lightshow function
@@ -145,13 +129,13 @@ typedef struct {
 // define the lightshows with pwm time boundaries in microseconds.  The overlap between
 // entries allows for some jitter and a new state should not be
 pwm_lightshow_t lightshows[] = {
-  {    0,  300, &blackout,   "blackout"},       // no lights
-  {  200,  600, &autonomous, "autonomous"},     // tbd
-  {  500,  900, &catching,   "catching" },      // green alternating
-  {  800, 1200, &disabled,   "disabled" },      // purple alternating
-  { 1100, 1500, &rainbow,    "rainbow" },       // rainbow happy times
-  { 1400, 1800, &cops,       "cops" },          // red and blue flashers
-  { 1700, 2100, &blackout,   "blackout" },      // no lights
+  {    0,  500, &blackout,   "blackout"},       // no lights
+  {  450,  850, &autonomous, "autonomous"},     // cylon lights
+  {  800, 1200, &showoff,    "showoff" },       // random show
+  { 1100, 1500, &catching,   "catching" },      // green landing lights
+  { 1450, 1850, &blackout,   "disabled" },      // no lights
+  { 1800, 2200, &teleop,     "teleop" },        // red and blue flashers
+  { 2150, 9000, &blackout,   "blackout" },      // no lights
   { 9999, 9999, &blackout,   "blackout" }       // list boundary (must be last!)
 };
 pwm_lightshow_t * currentLightShow = lightshows;
@@ -225,15 +209,22 @@ void setup() {
   currentLightShow = 0;
 
   Serial.begin(9600);
-  
+
   strip.begin();
   strip.show();
+
+  pinMode(PWM_INPUT, INPUT);
+  pinMode(TEST_OUTPUT, OUTPUT);
+  pinMode(ALLIANCE_INPUT, INPUT_PULLUP);
+  pinMode(NEOPIXEL_OUTPUT, OUTPUT);
+
+  // Set Alliance
+  if (digitalRead(ALLIANCE_INPUT) == HIGH) { alliance = RED; }
+  else { alliance = BLUE; }
 
   attachInterrupt(0, isr, CHANGE);
 }
 
 void loop() {
-  //selectAndRunLightShow(pwmPulseWidth);
-
-  catching();
+  selectAndRunLightShow(pwmPulseWidth);
 }

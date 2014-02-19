@@ -24,6 +24,37 @@ void alternating(uint32_t color1, uint32_t color2) {
   strip.fadeIn();
 }
 
+void cylon(uint32_t color) {
+  strip.setColorAndShow(color, 0b00000000000000000000000001100000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000011110000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000111111000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000001110011100, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000011100001110, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000111000000111, true); delay(100);
+  strip.setColorAndShow(color, 0b00000010000000000001110000000011, true); delay(100);
+  strip.setColorAndShow(color, 0b00000011000000000011100000000001, true); delay(100);
+  strip.setColorAndShow(color, 0b00000011100000000111000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000001110000001110000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000111000011100000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000011100111000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000001111110000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000111100000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000011000000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000111100000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000001111110000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000011100111000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000111000011100000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000001110000001110000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000011100000000111000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000011000000000011100000000001, true); delay(100);
+  strip.setColorAndShow(color, 0b00000010000000000001110000000011, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000111000000111, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000011100001110, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000001110011100, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000111111000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000011110000, true); delay(100);
+}
+
 void blackout() {
   if (strip.getBrightness() > 0) { strip.fadeOut(); }
 }
@@ -199,11 +230,6 @@ void setup() {
 
 void loop() {
   //selectAndRunLightShow(pwmPulseWidth);
-  //alternating(strip.Color(0xFF, 0xFF, 0x00), strip.Color(0x00, 0x00, 0x00));
-  //disabled();
-  //teleop();
-  //autonomous();
-  //catching();
-  //shoot();
-  ball();
+
+  cylon(strip.Color(0x00, 0x00, 0xFF));
 }

@@ -126,8 +126,14 @@ typedef struct {
   char *   name;           // name of lightshow
 } pwm_lightshow_t;
 
-// define the lightshows with pwm time boundaries in microseconds.  The overlap between
-// entries allows for some jitter and a new state should not be
+// define the lightshows with pwm time boundaries in microseconds.  The overlap
+// between entries allows for some jitter and a new state should not be entered
+// until the neighboring state has been left.  Values measured off the cRIO:
+//     650us   Autonomous
+//    1000us   Showoff
+//    1300us   Catching
+//    1650us   Disabled
+//    2000us   Teleop
 pwm_lightshow_t lightshows[] = {
   {    0,  500, &blackout,   "blackout"},       // no lights
   {  450,  850, &autonomous, "autonomous"},     // cylon lights

@@ -1,4 +1,4 @@
-include <Adafruit_NeoPixel.h>
+#include <Adafruit_NeoPixel.h>
 #include "lightstrip.h"
 
 #define PWM_INPUT       2
@@ -233,4 +233,8 @@ void setup() {
 
 void loop() {
   selectAndRunLightShow(pwmPulseWidth);
+
+  // Set Alliance
+  if (digitalRead(ALLIANCE_INPUT) == HIGH) { alliance = RED; }
+  else { alliance = BLUE; }
 }

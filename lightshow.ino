@@ -135,14 +135,14 @@ typedef struct {
 //    1650us   Disabled
 //    2000us   Teleop
 pwm_lightshow_t lightshows[] = {
-  {    0,  500, &blackout,   "blackout"},       // no lights
+  {    0,  500, &cops,       "default"},        // default
   {  450,  850, &autonomous, "autonomous"},     // cylon lights
   {  800, 1200, &showoff,    "showoff" },       // random show
   { 1100, 1500, &catching,   "catching" },      // green landing lights
-  { 1450, 1850, &blackout,   "disabled" },      // no lights
+  { 1450, 1850, &cops,   "disabled" },      // no lights
   { 1800, 2200, &teleop,     "teleop" },        // red and blue flashers
-  { 2150, 9000, &blackout,   "blackout" },      // no lights
-  { 9999, 9999, &blackout,   "blackout" }       // list boundary (must be last!)
+  { 2150, 9000, &cops,   "blackout" },      // no lights
+  { 9999, 9999, &cops,   "blackout" }       // list boundary (must be last!)
 };
 pwm_lightshow_t * currentLightShow = lightshows;
 

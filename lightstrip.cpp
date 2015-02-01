@@ -29,10 +29,10 @@ uint8_t LightStrip::getBrightness() {
 
 void LightStrip::setBrightness(uint8_t value) {
   brightness = value;
-  Adafruit_NeoPixel::setBrightness(value); 
+  Adafruit_NeoPixel::setBrightness(value);
 }
 
-void LightStrip::fadeOut(uint32_t time) {  
+void LightStrip::fadeOut(uint32_t time) {
   for (uint8_t v = getBrightness() ; v > 0 ; v--) {
     setBrightness(v);
     show();
@@ -40,7 +40,7 @@ void LightStrip::fadeOut(uint32_t time) {
   }
 }
 
-void LightStrip::fadeIn(uint32_t time) {  
+void LightStrip::fadeIn(uint32_t time) {
   for (uint8_t v = getBrightness() ; v < 0xFF ; v++) {
     setBrightness(v);
     show();

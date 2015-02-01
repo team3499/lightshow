@@ -1,19 +1,15 @@
 #include <Adafruit_NeoPixel.h>
 #include "lightstrip.h"
 
-#define PWM_INPUT       2
-#define TEST_OUTPUT     3
-#define ALLIANCE_INPUT  4
-#define NEOPIXEL_OUTPUT 6
+#define PWM_PORT        2
+#define RING_FRONT_PORT 5
+#define RING_BACK_PORT  6
 
 ////////////////////////////////////////////////////////////////////////////
 
-typedef enum {
-  RED,
-  BLUE
-} alliance_t;
-
-alliance_t alliance;
+#define RED   0xFF0000
+#define GREEN 0x00FF00
+#define BLUE  0x0000FF
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -21,101 +17,111 @@ alliance_t alliance;
 // should represent a single, full cycle of animation.  See lightshows
 // below to define the PWM pulse width that triggers each show.
 
-LightStrip strip = LightStrip(25, NEOPIXEL_OUTPUT);
+LightStrip ringFront = LightStrip(16, RING_FRONT_PORT);
+LightStrip ringBack  = LightStrip(16, RING_BACK_PORT);
 
 // Alternates even/odd between color
 void alternating(uint32_t color1, uint32_t color2) {
-  strip.fadeOut();
-  strip.setColor(color1, 0xAAAAAAAA);
-  strip.setColor(color2, 0x55555555);
-  strip.fadeIn();
-  strip.fadeOut();
-  strip.setColor(color1, 0x55555555);
-  strip.setColor(color2, 0xAAAAAAAA);
-  strip.fadeIn();
-}
+  ringFront.setBrightness(0xFF);
+  ringBack.setBrightness(0xFF);
 
-void cylon(uint32_t color) {
-  strip.setColorAndShow(color, 0b00000000000000000000000000011000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000000111100, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000001111110, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000011100111, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000111000011, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000001110000001, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000100000000000011100000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000110000000000111000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000111000000001110000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000011100000011100000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000001110000111000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000111001110000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000011111100000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000001111000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000110000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000001111000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000011111100000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000111001110000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000001110000111000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000011100000011100000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000111000000001110000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000110000000000111000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000100000000000011100000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000001110000001, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000111000011, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000011100111, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000001111110, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000000111100, true); delay(100);
-}
-
-void blackout() {
-  if (strip.getBrightness() > 0) { strip.fadeOut(); }
-  strip.setBrightness(0);
+  ringFront.setColor(color1, 0xAAAA);
+  ringFront.setColor(color2, 0x5555);
+  ringBack.setColor(color1, 0xAAAA);
+  ringBack.setColor(color2, 0x5555);
+  ringFront.show();
+  ringBack.show();
+  delay(250);
+  ringFront.setColor(color1, 0x5555);
+  ringFront.setColor(color2, 0xAAAA);
+  ringBack.setColor(color1, 0x5555);
+  ringBack.setColor(color2, 0xAAAA);
+  ringFront.show();
+  ringBack.show();
+  delay(250);
 }
 
 void autonomous() {
-  alternating(strip.Color(0xFF, 0xFF, 0x00), strip.Color(0x00, 0x00, 0x00));
+  ringFront.setBrightness(0xFF);
+  ringBack.setBrightness(0xFF);
+
+  // ringFront.setColor(BLUE, 0b0000000000000001, true);
+  // ringFront.setColor(RED,  0b0000000100000000);
+  // ringFront.show();
+  // ringBack.setColor(BLUE,  0b0000000000000001, true);
+  // ringBack.setColor(RED,   0b0000000100000000);
+  // ringBack.show();
+
+  for (int i = 0 ; i < 8 ; ++i) {
+    ringFront.setColor(RED, 1 << i, true);
+    ringFront.setColor(BLUE,  1 << (i+8));
+    ringFront.show();
+    ringBack.setColor(RED,  1 << i, true);
+    ringBack.setColor(BLUE,   1 << (i+8));
+    ringBack.show();
+    delay(100);
+  }
+  for (int i = 0 ; i < 8 ; ++i) {
+    ringFront.setColor(BLUE, 1 << i, true);
+    ringFront.setColor(RED,  1 << (i+8));
+    ringFront.show();
+    ringBack.setColor(BLUE,  1 << i, true);
+    ringBack.setColor(RED,   1 << (i+8));
+    ringBack.show();
+    delay(100);
+  }
 }
 
-void boundary() {
-  alternating(strip.Color(0xFF, 0x00, 0xFF), strip.Color(0x00, 0x00, 0x00));
+void ramp0() {
+  ringFront.setColor(RED, 0xFFFF, true);
+  ringBack.setColor(RED,  0xFFFF, true);
+  ringFront.setBrightness(0xFF);
+  ringBack.setBrightness(0xFF);
+  ringFront.show();
+  ringBack.show();
 }
 
-void teleop(){
-  uint32_t alliance_color;
-  if (alliance == BLUE) { alliance_color = strip.Color(0x00, 0x00, 0xFF); }
-  else { alliance_color = strip.Color(0xFF, 0x00, 0x00); }
-  cylon(alliance_color);
+void ramp1() {
+  ringFront.setColor(GREEN, 0xFF00, true);
+  ringFront.setColor(RED,   0x00FF);
+  ringBack.setColor(GREEN,  0x00FF, true);
+  ringBack.setColor(RED,    0xFF00);
+  ringFront.setBrightness(0xFF);
+  ringBack.setBrightness(0xFF);
+  ringFront.show();
+  ringBack.show();
 }
 
-void catching() {
-  uint32_t color = strip.Color(0x00, 0xFF, 0x00);
-  strip.setColorAndShow(color, 0b00000000000000110000000000011000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000000001111000000000111100, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000000011001100000001100110, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000000110000110000011000011, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000001100000011000110000001, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000011000000001101100000000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000110000000000111000000000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000100000000000010000000000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000000000000000000000000000, true); delay(200);
+void ramp2() {
+  ringFront.setColor(RED,   0xFF00, true);
+  ringFront.setColor(GREEN, 0x00FF);
+  ringBack.setColor(RED,    0x00FF, true);
+  ringBack.setColor(GREEN,  0xFF00);
+  ringFront.setBrightness(0xFF);
+  ringBack.setBrightness(0xFF);
+  ringFront.show();
+  ringBack.show();
 }
 
-void showoff() {
-  cops();
+void ramp3() {
+  ringFront.setColor(GREEN, 0xFFFF, true);
+  ringBack.setColor(GREEN,  0xFFFF, true);
+  ringFront.setBrightness(0xFF);
+  ringBack.setBrightness(0xFF);
+  ringFront.show();
+  ringBack.show();
 }
 
-void cops() {
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000000000001111);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000001111110000);
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000011111100000000000);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000011111100000000000000000);
-  strip.show();
-  delay(200);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000000000001111);
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000001111110000);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000011111100000000000);
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000011111100000000000000000);
-  strip.show();
-  delay(200);
+void blackout() {
+  if (ringFront.getBrightness() > 0) { ringFront.fadeOut(); }
+  ringFront.setBrightness(0);
+  if (ringBack.getBrightness() > 0) { ringBack.fadeOut(); }
+  ringBack.setBrightness(0);
+}
+
+void signal() {
+  alternating(RED, BLUE);
+  alternating(RED, BLUE);
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -139,14 +145,14 @@ typedef struct {
 //    1650us   Disabled
 //    2000us   Teleop
 pwm_lightshow_t lightshows[] = {
-  {    0,  500, &cops,       "default"},        // default
-  {  450,  850, &autonomous, "autonomous"},     // cylon lights
-  {  800, 1200, &autonomous,  "showoff" },       // random show
-  { 1100, 1500, &catching,   "catching" },      // green landing lights
-  { 1450, 1850, &boundary,   "disabled" },      // no lights
-  { 1800, 2200, &teleop,     "teleop" },        // red and blue flashers
-  { 2150, 9000, &catching,   "blackout" },      // no lights
-  { 9999, 9999, &boundary,   "boundary" }       // list boundary (must be last!)
+  {    0,  500, &blackout,   "blackout"},     // blackout
+  {  450,  850, &ramp0,      "ramp_neither"}, // ramp sensors detect: neither
+  {  800, 1200, &ramp1,      "ramp_left" },   // ramp sensors detect: left
+  { 1100, 1500, &ramp2,      "ramp_right" },  // ramp sensors detect: right
+  { 1450, 1850, &ramp3,      "ramp_both" },   // ramp sensors detect: both
+  { 1800, 2200, &autonomous, "autonomous" },  // spinner
+  { 2150, 9000, &signal,     "signal" },      // signal driver
+  { 9999, 9999, &blackout,   "boundary" }     // no lights
 };
 pwm_lightshow_t * currentLightShow = lightshows;
 
@@ -164,7 +170,7 @@ volatile uint32_t pwmPulseWidth;    // duration of pulse in microseconds
 void isr() {
   uint32_t now = micros();
 
-  if (digitalRead(PWM_INPUT) == LOW) {
+  if (digitalRead(PWM_PORT) == LOW) {
     pwmPulseWidth = now - pwmRisingEdge;
   } else {
     pwmRisingEdge = now;
@@ -220,30 +226,18 @@ void setup() {
 
   Serial.begin(9600);
 
-  strip.begin();
-  strip.show();
+  ringFront.begin();
+  ringBack.begin();
+  ringFront.show();
+  ringBack.show();
 
-  pinMode(PWM_INPUT, INPUT);
-  pinMode(TEST_OUTPUT, OUTPUT);
-  pinMode(ALLIANCE_INPUT, INPUT_PULLUP);
-  pinMode(NEOPIXEL_OUTPUT, OUTPUT);
-
-  // Set Alliance
-  if (digitalRead(ALLIANCE_INPUT) == HIGH) { alliance = RED; }
-  else { alliance = BLUE; }
+  pinMode(PWM_PORT, INPUT);
+  pinMode(RING_FRONT_PORT, OUTPUT);
+  pinMode(RING_BACK_PORT, OUTPUT);
 
   attachInterrupt(0, isr, CHANGE);
 }
 
 void loop() {
   selectAndRunLightShow(pwmPulseWidth);
-  //uint32_t alliance_color;
-  //if (alliance == BLUE) { alliance_color = strip.Color(0x00, 0x00, 0xFF); }
-  //else { alliance_color = strip.Color(0xFF, 0x00, 0x00); }
-  //cylon(alliance_color);
-  //catching();
-  
-  // Set Alliance
-  if (digitalRead(ALLIANCE_INPUT) == HIGH) { alliance = RED; }
-  else { alliance = BLUE; }
 }

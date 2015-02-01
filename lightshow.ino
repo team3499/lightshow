@@ -21,7 +21,7 @@ alliance_t alliance;
 // should represent a single, full cycle of animation.  See lightshows
 // below to define the PWM pulse width that triggers each show.
 
-LightStrip strip = LightStrip(26, NEOPIXEL_OUTPUT);
+LightStrip strip = LightStrip(25, NEOPIXEL_OUTPUT);
 
 // Alternates even/odd between color
 void alternating(uint32_t color1, uint32_t color2) {
@@ -36,34 +36,34 @@ void alternating(uint32_t color1, uint32_t color2) {
 }
 
 void cylon(uint32_t color) {
-  strip.setColorAndShow(color, 0b00000000000000000000000001100000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000011110000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000111111000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000001110011100, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000011100001110, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000111000000111, true); delay(100);
-  strip.setColorAndShow(color, 0b00000010000000000001110000000011, true); delay(100);
-  strip.setColorAndShow(color, 0b00000011000000000011100000000001, true); delay(100);
-  strip.setColorAndShow(color, 0b00000011100000000111000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000001110000001110000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000111000011100000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000011100111000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000001111110000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000111100000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000011000000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000111100000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000001111110000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000011100111000000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000111000011100000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000001110000001110000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000011100000000111000000000000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000011000000000011100000000001, true); delay(100);
-  strip.setColorAndShow(color, 0b00000010000000000001110000000011, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000111000000111, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000011100001110, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000001110011100, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000111111000, true); delay(100);
-  strip.setColorAndShow(color, 0b00000000000000000000000011110000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000000011000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000000111100, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000001111110, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000011100111, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000111000011, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000001110000001, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000100000000000011100000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000110000000000111000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000111000000001110000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000011100000011100000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000001110000111000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000111001110000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000011111100000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000001111000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000110000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000001111000000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000011111100000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000111001110000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000001110000111000000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000011100000011100000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000111000000001110000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000110000000000111000000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000100000000000011100000000, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000001110000001, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000111000011, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000011100111, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000001111110, true); delay(100);
+  strip.setColorAndShow(color, 0b00000000000000000000000000111100, true); delay(100);
 }
 
 void blackout() {
@@ -75,6 +75,10 @@ void autonomous() {
   alternating(strip.Color(0xFF, 0xFF, 0x00), strip.Color(0x00, 0x00, 0x00));
 }
 
+void boundary() {
+  alternating(strip.Color(0xFF, 0x00, 0xFF), strip.Color(0x00, 0x00, 0x00));
+}
+
 void teleop(){
   uint32_t alliance_color;
   if (alliance == BLUE) { alliance_color = strip.Color(0x00, 0x00, 0xFF); }
@@ -84,14 +88,14 @@ void teleop(){
 
 void catching() {
   uint32_t color = strip.Color(0x00, 0xFF, 0x00);
-  strip.setColorAndShow(color, 0b00000000000011000000000001100000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000000111100000000011110000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000001100110000000110011000, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000011000011000001100001100, true); delay(50);
-  strip.setColorAndShow(color, 0b00000000110000001100011000000110, true); delay(50);
-  strip.setColorAndShow(color, 0b00000001100000000110110000000011, true); delay(50);
-  strip.setColorAndShow(color, 0b00000011000000000011100000000001, true); delay(50);
-  strip.setColorAndShow(color, 0b00000010000000000001000000000000, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000000000110000000000011000, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000000001111000000000111100, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000000011001100000001100110, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000000110000110000011000011, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000001100000011000110000001, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000011000000001101100000000, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000110000000000111000000000, true); delay(50);
+  strip.setColorAndShow(color, 0b00000000100000000000010000000000, true); delay(50);
   strip.setColorAndShow(color, 0b00000000000000000000000000000000, true); delay(200);
 }
 
@@ -100,16 +104,16 @@ void showoff() {
 }
 
 void cops() {
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000000000111111);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000111111000000);
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000001111110000000000000);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000001111110000000000000000000);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000000000001111);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000001111110000);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000011111100000000000);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000011111100000000000000000);
   strip.show();
   delay(200);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000000000111111);
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000111111000000);
-  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000001111110000000000000);
-  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000001111110000000000000000000);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000000000000000001111);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000000000000000001111110000);
+  strip.setColor(strip.Color(0x00, 0x00, 0xFF), 0b00000000000000011111100000000000);
+  strip.setColor(strip.Color(0xFF, 0x00, 0x00), 0b00000000011111100000000000000000);
   strip.show();
   delay(200);
 }
@@ -137,12 +141,12 @@ typedef struct {
 pwm_lightshow_t lightshows[] = {
   {    0,  500, &cops,       "default"},        // default
   {  450,  850, &autonomous, "autonomous"},     // cylon lights
-  {  800, 1200, &showoff,    "showoff" },       // random show
+  {  800, 1200, &autonomous,  "showoff" },       // random show
   { 1100, 1500, &catching,   "catching" },      // green landing lights
-  { 1450, 1850, &cops,   "disabled" },      // no lights
+  { 1450, 1850, &boundary,   "disabled" },      // no lights
   { 1800, 2200, &teleop,     "teleop" },        // red and blue flashers
-  { 2150, 9000, &cops,   "blackout" },      // no lights
-  { 9999, 9999, &cops,   "blackout" }       // list boundary (must be last!)
+  { 2150, 9000, &catching,   "blackout" },      // no lights
+  { 9999, 9999, &boundary,   "boundary" }       // list boundary (must be last!)
 };
 pwm_lightshow_t * currentLightShow = lightshows;
 
@@ -189,7 +193,7 @@ void selectAndRunLightShow(uint32_t pulse) {
 
   while (lightshow->lowerBound < 9999) {
 
-    if (pulse > lightshow->lowerBound &&
+    if (pulse >= lightshow->lowerBound &&
         pulse < lightshow->upperBound) {
       // Pluse is within the window for a light show.  Make sure it has exited
       // the neighboring light show via a guard band (hysteresis) -- prevents
@@ -233,7 +237,12 @@ void setup() {
 
 void loop() {
   selectAndRunLightShow(pwmPulseWidth);
-
+  //uint32_t alliance_color;
+  //if (alliance == BLUE) { alliance_color = strip.Color(0x00, 0x00, 0xFF); }
+  //else { alliance_color = strip.Color(0xFF, 0x00, 0x00); }
+  //cylon(alliance_color);
+  //catching();
+  
   // Set Alliance
   if (digitalRead(ALLIANCE_INPUT) == HIGH) { alliance = RED; }
   else { alliance = BLUE; }

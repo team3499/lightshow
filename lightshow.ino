@@ -119,9 +119,9 @@ void blackout() {
   ringBack.setBrightness(0);
 }
 
-void signal() {
-  alternating(RED, BLUE);
-  alternating(RED, BLUE);
+void camera() {
+  ringFront.setColorAndShow(0x0000FF);
+  ringBack.setColorAndShow(0x0000FF);
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ pwm_lightshow_t lightshows[] = {
   { 1100, 1500, &ramp2,      "ramp_right" },  // ramp sensors detect: right
   { 1450, 1850, &ramp3,      "ramp_both" },   // ramp sensors detect: both
   { 1800, 2200, &autonomous, "autonomous" },  // spinner
-  { 2150, 9000, &signal,     "signal" },      // signal driver
+  { 2150, 9000, &camera,     "camera" },      // camera illumination
   { 9999, 9999, &blackout,   "boundary" }     // no lights
 };
 pwm_lightshow_t * currentLightShow = lightshows;

@@ -10,6 +10,7 @@
 #define RED   0xFF0000
 #define GREEN 0x00FF00
 #define BLUE  0x0000FF
+#define WHITE 0xFFFFFF
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -17,111 +18,114 @@
 // should represent a single, full cycle of animation.  See lightshows
 // below to define the PWM pulse width that triggers each show.
 
-LightStrip ringFront = LightStrip(16, RING_FRONT_PORT);
-LightStrip ringBack  = LightStrip(16, RING_BACK_PORT);
+// Assumes back ring is mounted upside-down vs. front ring
+
+#define RING_COUNT 2
+
+LightStrip ring[RING_COUNT] = { LightStrip(16, RING_FRONT_PORT),
+                                LightStrip(16, RING_BACK_PORT) };
+
+// Set brightness on one or all rings
+void setBrightness(uint8_t brightness, int index = -1) {
+  if (index < 0) {
+    for (int i = 0; i < RING_COUNT; ++i) { ring[i].setBrightness(brightness); }
+  } else if (index < RING_COUNT) {
+    ring[index].setBrightness(brightness);
+  }
+}
+
+// Set color for one or all rings
+void setColor(uint32_t color, uint32_t mask, int index = -1) {
+  if (index < 0) {
+    for (int i = 0; i < RING_COUNT; ++i) { ring[i].setColor(color, mask); }
+  } else if (index < RING_COUNT) {
+    ring[index].setColor(color, mask);
+  }
+}
+
+// clear one or all rings
+void clear(int index = -1) {
+  setColor(0, 0xFFFFFFFF, index);
+}
+
+// show one or all rings
+void show(int index = -1) {
+  if (index < 0) {
+    for (int i = 0; i < RING_COUNT; ++i) { ring[i].show(); }
+  } else if (index < RING_COUNT) {
+    ring[index].show();
+  }
+}
 
 // Alternates even/odd between color
 void alternating(uint32_t color1, uint32_t color2) {
-  ringFront.setBrightness(0xFF);
-  ringBack.setBrightness(0xFF);
+  setBrightness(0xFF);
 
-  ringFront.setColor(color1, 0xAAAA);
-  ringFront.setColor(color2, 0x5555);
-  ringBack.setColor(color1, 0xAAAA);
-  ringBack.setColor(color2, 0x5555);
-  ringFront.show();
-  ringBack.show();
+  setColor(color1, 0xAAAA);
+  setColor(color2, 0x5555);
+  show();
+
   delay(250);
-  ringFront.setColor(color1, 0x5555);
-  ringFront.setColor(color2, 0xAAAA);
-  ringBack.setColor(color1, 0x5555);
-  ringBack.setColor(color2, 0xAAAA);
-  ringFront.show();
-  ringBack.show();
+
+  setColor(color1, 0x5555);
+  setColor(color2, 0xAAAA);
+  show();
+
   delay(250);
 }
 
 void autonomous() {
-  ringFront.setBrightness(0xFF);
-  ringBack.setBrightness(0xFF);
-
-  // ringFront.setColor(BLUE, 0b0000000000000001, true);
-  // ringFront.setColor(RED,  0b0000000100000000);
-  // ringFront.show();
-  // ringBack.setColor(BLUE,  0b0000000000000001, true);
-  // ringBack.setColor(RED,   0b0000000100000000);
-  // ringBack.show();
+  setBrightness(0xFF);
 
   for (int i = 0 ; i < 8 ; ++i) {
-    ringFront.setColor(RED, 1 << i, true);
-    ringFront.setColor(BLUE,  1 << (i+8));
-    ringFront.show();
-    ringBack.setColor(RED,  1 << i, true);
-    ringBack.setColor(BLUE,   1 << (i+8));
-    ringBack.show();
+    setColor(RED, 1L << i);
+    setColor(BLUE, 1L << (i+8));
+    show();
     delay(100);
   }
   for (int i = 0 ; i < 8 ; ++i) {
-    ringFront.setColor(BLUE, 1 << i, true);
-    ringFront.setColor(RED,  1 << (i+8));
-    ringFront.show();
-    ringBack.setColor(BLUE,  1 << i, true);
-    ringBack.setColor(RED,   1 << (i+8));
-    ringBack.show();
+    setColor(BLUE, 1L << i);
+    setColor(RED, 1L << (i+8));
+    show();
     delay(100);
   }
 }
 
 void ramp0() {
-  ringFront.setColor(RED, 0xFFFF, true);
-  ringBack.setColor(RED,  0xFFFF, true);
-  ringFront.setBrightness(0xFF);
-  ringBack.setBrightness(0xFF);
-  ringFront.show();
-  ringBack.show();
+  setColor(RED, 0xFFFF);
+  setBrightness(0xFF);
+  show();
 }
 
 void ramp1() {
-  ringFront.setColor(GREEN, 0xFF00, true);
-  ringFront.setColor(RED,   0x00FF);
-  ringBack.setColor(GREEN,  0x00FF, true);
-  ringBack.setColor(RED,    0xFF00);
-  ringFront.setBrightness(0xFF);
-  ringBack.setBrightness(0xFF);
-  ringFront.show();
-  ringBack.show();
+  setColor(GREEN, 0xFF00);
+  setColor(RED, 0x00FF);
+  setBrightness(0xFF);
+  show();
 }
 
 void ramp2() {
-  ringFront.setColor(RED,   0xFF00, true);
-  ringFront.setColor(GREEN, 0x00FF);
-  ringBack.setColor(RED,    0x00FF, true);
-  ringBack.setColor(GREEN,  0xFF00);
-  ringFront.setBrightness(0xFF);
-  ringBack.setBrightness(0xFF);
-  ringFront.show();
-  ringBack.show();
+  setColor(RED, 0xFF00);
+  setColor(GREEN, 0x00FF);
+  setBrightness(0xFF);
+  show();
 }
 
 void ramp3() {
-  ringFront.setColor(GREEN, 0xFFFF, true);
-  ringBack.setColor(GREEN,  0xFFFF, true);
-  ringFront.setBrightness(0xFF);
-  ringBack.setBrightness(0xFF);
-  ringFront.show();
-  ringBack.show();
+  setColor(GREEN, 0xFFFF);
+  setBrightness(0xFF);
+  show();
 }
 
 void blackout() {
-  if (ringFront.getBrightness() > 0) { ringFront.fadeOut(); }
-  ringFront.setBrightness(0);
-  if (ringBack.getBrightness() > 0) { ringBack.fadeOut(); }
-  ringBack.setBrightness(0);
+  clear();
+  show();
 }
 
 void camera() {
-  ringFront.setColorAndShow(0x0000FF);
-  ringBack.setColorAndShow(0x0000FF);
+  setColor(WHITE, 0xFFFF);
+  setBrightness(0xFF);
+  show();
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -226,10 +230,10 @@ void setup() {
 
   Serial.begin(9600);
 
-  ringFront.begin();
-  ringBack.begin();
-  ringFront.show();
-  ringBack.show();
+  for (int i = 0; i < RING_COUNT ; ++i) {
+    ring[i].begin();
+    ring[i].show();
+  }
 
   pinMode(PWM_PORT, INPUT);
   pinMode(RING_FRONT_PORT, OUTPUT);
